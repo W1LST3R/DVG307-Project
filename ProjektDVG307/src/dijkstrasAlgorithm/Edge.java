@@ -1,4 +1,5 @@
 package dijkstrasAlgorithm;
+//kommentar
 
 public class Edge <T extends Comparable<T>> {
 
