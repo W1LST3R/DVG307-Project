@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 public class DemoApp extends JFrame
   {
   private MapPanel mapPanel;
-  private IGraph graph = new Graph();
+  private IGraph graph = new Graph(new Vertex());
 
   public DemoApp()
     {
