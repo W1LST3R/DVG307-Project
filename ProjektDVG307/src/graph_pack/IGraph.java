@@ -1,4 +1,8 @@
+package graph_pack;
+
 import java.util.List;
+
+import dijkstrasAlgorithm.Vertex;
 
 public interface IGraph
   {

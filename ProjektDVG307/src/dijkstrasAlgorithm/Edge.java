@@ -4,8 +4,7 @@ package dijkstrasAlgorithm;
 public class Edge <T extends Comparable<T>> {
 
 	private int weight;
-	private Vertex fromVertex;
-	private Vertex toVertex;
+	private Vertex nextVertex;
 	public Edge() {
 		
 	}
@@ -17,19 +16,11 @@ public class Edge <T extends Comparable<T>> {
 		weight = newWeight;
 	}
 	
-	public Vertex getFromVertex(){
-		return fromVertex;
+	public Vertex getVertex(){
+		return nextVertex;
 	}
 	
-	public void setFromVertex(Vertex newFromVertex){
-		fromVertex = newFromVertex;
-	}
-	
-	public Vertex getToVertex(){
-		return toVertex;
-	}
-	
-	public void setToVertex(Vertex newFromVertex){
-		toVertex = newFromVertex;
+	public void setVertex(Vertex newFromVertex){
+		nextVertex = newFromVertex;
 	}
 }

@@ -1,3 +1,5 @@
+package graph_pack;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,11 +10,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import dijkstra.*;
-
 import javax.swing.JPanel;
-
-import dijkstra.IGraph;
+import dijkstrasAlgorithm.Edge;
+import dijkstrasAlgorithm.Vertex;
 
 @SuppressWarnings("serial")
 public class MapPanel extends JPanel
