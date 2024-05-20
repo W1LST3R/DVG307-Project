@@ -7,8 +7,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import graph_pack.IGraph;
-
 public class Graph <T extends Comparable<T>> implements IGraph {
 
 	private ArrayList<Vertex> vertexList;
@@ -136,44 +134,5 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 			  }
 		}
 	}
-	@Override
-	public void addVertex(String id, double population, double longitude, double latitude) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void connectVertices(String id1, String id2, double weight) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public Vertex getStartVertex() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void setTargetVertex(Vertex target) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public Vertex getTargetVertex() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void findShortestPath(String start_id) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void findShortestPath(Vertex start_vertex) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
