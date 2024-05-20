@@ -6,8 +6,11 @@ public class Edge <T extends Comparable<T>> {
 	private int weight;
 	private Vertex fromVertex;
 	private Vertex toVertex;
-	public Edge() {
-		
+	public Edge(Vertex fromVertex, Vertex toVertex, int weight) {
+		// kanske borde kolla så att fromVertex och toVertex inte är samma
+		setFromVertex(fromVertex);
+		setToVertex(toVertex);
+		setWeight(weight);
 	}
 	public int getWeight(){
 		return weight;
