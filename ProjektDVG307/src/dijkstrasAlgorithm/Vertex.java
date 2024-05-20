@@ -12,11 +12,12 @@ public class Vertex {
 	private Vertex predecessor;//predecessor - den vertex av de närliggande som är nästa steg längs den kortaste vägen till startvertex
 	private double distance; //distance - avståndet från denna vertex till startvertex
 	
-	public Vertex(String name, double longitude, double latitude, double population) {
+	public Vertex(String name, double population, double longitude, double latitude) {
 		setName(name);
+		setPopulation(population);
 		setLongitude(longitude);
 		setLatitude(latitude);
-		setPopulation(population);
+		ajencyList = new ArrayList<>();
 	}
 	
 	public void addEdge(Edge newEdge){ //- lägg till edge till närliggande vertex

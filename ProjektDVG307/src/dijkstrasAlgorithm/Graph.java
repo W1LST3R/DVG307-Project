@@ -15,7 +15,11 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	private HashMap<String,Vertex> vertexMap;
 	private Vertex startVertex;
 	private Vertex targetVertex;
-
+	public Graph() {		
+		vertexList = new ArrayList<>();
+		edgeList = new ArrayList<>();
+		vertexMap = new HashMap<>();
+	}
 	public Graph(Vertex start) {
 		startVertex = start;
 		vertexList = new ArrayList<>();
@@ -24,20 +28,28 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	}
 	public void readVertexFile(String filename) {
 
-		Scanner scanner;
+		Scanner scanLine, scanRow = null;
+
 		try {
-			scanner = new Scanner(new File(filename));
-			scanner.nextLine(); // hoppa över första raden
-			scanner.useDelimiter(";");
-			while(scanner.hasNext()) {
-				addVertex(
-						scanner.next(), // name/id
-						Double.parseDouble(scanner.next()), // population
-						Double.parseDouble(scanner.next()), //longitude
-						Double.parseDouble(scanner.next()) // latitude
-						);
+			scanLine = new Scanner(new File(filename));
+			scanLine.useDelimiter("[\r\n]"); // sätt delimiter på ny rad
+			scanLine.nextLine(); // hoppa över första raden
+			
+			while(scanLine.hasNextLine()) {
+				scanRow = new Scanner(scanLine.next());
+				scanRow.useDelimiter(";");
+				while(scanRow.hasNext()) {
+					addVertex(
+							scanRow.next(), // name/id
+							Double.parseDouble(scanRow.next()), // population
+							Double.parseDouble(scanRow.next().replace(",", ".")), //longitude
+							Double.parseDouble(scanRow.next().replace(",", ".")) // latitude
+							);
+				}
 			}
-			scanner.close();
+			
+			scanLine.close();
+			scanRow.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,6 +57,31 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	}
 	public void readEdgeFile(String filename){
 		
+		Scanner scanLine, scanRow = null;
+
+		try {
+			scanLine = new Scanner(new File(filename));
+			scanLine.useDelimiter("[\r\n]"); // sätt delimiter på ny rad
+			scanLine.nextLine(); // hoppa över första raden
+			
+			while(scanLine.hasNextLine()) {
+				scanRow = new Scanner(scanLine.next());
+				scanRow.useDelimiter(";");
+				while(scanRow.hasNext()) {
+					connectVertices(
+							scanRow.next(), // fromVertex
+							scanRow.next(), // toVertex
+							Double.parseDouble(scanRow.next().replace(",", ".")) // distance in meters
+							);
+				}
+			}
+			
+			scanLine.close();
+			scanRow.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public ArrayList<Vertex> getVertices(){
 		return vertexList;
@@ -55,13 +92,13 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	
 	@Override
 	public void addVertex(String id, double population, double longitude, double latitude) {
-		Vertex tempVertex = new Vertex(id, longitude, latitude, population);
+		Vertex tempVertex = new Vertex(id, population, longitude, latitude);
 		vertexList.add(tempVertex);
 		vertexMap.put(id, tempVertex);
 	}
 	@Override
 	public void connectVertices(String id1, String id2, double weight) {
-		Edge tempEdge = new Edge(vertexMap.get(id1), vertexMap.get(id1), weight);
+		Edge tempEdge = new Edge(vertexMap.get(id1), vertexMap.get(id2), weight);
 		edgeList.add(tempEdge);
 		vertexMap.get(id1).addEdge(tempEdge);
 		vertexMap.get(id2).addEdge(tempEdge);
@@ -130,9 +167,7 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 							  proposedVertex.setPredecessor(currentVertex);
 				              prioQ.update(proposedVertex, proposedVertex.getDistance());
 						  }
-			            
 			  }
 		}
 	}
-
 }
