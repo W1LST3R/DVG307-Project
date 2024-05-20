@@ -8,7 +8,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import dijkstrasAlgorithm.Graph;
 
 @SuppressWarnings("serial")
 public class DemoApp extends JFrame
