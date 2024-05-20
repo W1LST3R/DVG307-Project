@@ -1,22 +1,22 @@
 package dijkstrasAlgorithm;
 //kommentar
 
-public class Edge <T extends Comparable<T>> {
+public class Edge{
 
-	private int weight;
+	private double weight;
 	private Vertex fromVertex;
 	private Vertex toVertex;
-	public Edge(Vertex fromVertex, Vertex toVertex, int weight) {
+	public Edge(Vertex fromVertex, Vertex toVertex, double weight) {
 		// kanske borde kolla så att fromVertex och toVertex inte är samma
 		setFromVertex(fromVertex);
 		setToVertex(toVertex);
 		setWeight(weight);
 	}
-	public int getWeight(){
+	public double getWeight(){
 		return weight;
 	}
 	
-	public void setWeight(int newWeight){
+	public void setWeight(double newWeight){
 		weight = newWeight;
 	}
 	
