@@ -70,6 +70,8 @@ public class MapPanel extends JPanel
         {
         case KeyEvent.VK_ENTER:
         case KeyEvent.VK_SPACE:
+        	model.findShortestPath(model.getStartVertex());
+        	break;
         case KeyEvent.VK_C: // clear
           model.clear();
           break;

@@ -69,4 +69,9 @@ public class Vertex {
 	public void setDistance(double newDistance) {
 		distance = newDistance;
 	}
+	@Override
+	public String toString() {
+		return getName();
+	}
+	
 }
