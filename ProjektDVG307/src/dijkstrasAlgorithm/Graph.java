@@ -38,7 +38,7 @@ public class Graph <T extends Comparable<T>> {
 		while(!prioQ.isEmpty()) {
 			  Vertex currentVertex = (Vertex) prioQ.extract();
 			  for(Edge edge : currentVertex.getEdges()) {
-				  Vertex proposedVertex = edge.getVertex();
+				  Vertex proposedVertex = edge.getToVertex();
 						  if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
 							  proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
 							  proposedVertex.setPredecessor(currentVertex);

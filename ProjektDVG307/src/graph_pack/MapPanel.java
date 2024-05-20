@@ -198,7 +198,7 @@ public class MapPanel extends JPanel
       g2d.setColor(Color.lightGray);
       for(Edge e : v.getEdges())
         {
-        Vertex v2 = e.getVertex();
+        Vertex v2 = e.getToVertex();
         double x2 = v2.getLongitude();
         double y2 = v2.getLatitude();
         int pixel_x2 = (int)(0.5 + SCALE*x_scale*(x2 - x_mid_data));
