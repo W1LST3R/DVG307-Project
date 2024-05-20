@@ -176,7 +176,7 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 					prioQ.update(proposedVertex, proposedVertex.getDistance());
 					//System.out.println(proposedVertex.getName());
 				}
-				System.out.println("========");
+				//System.out.println("========");
 			}
 		}
 	}
