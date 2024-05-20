@@ -7,8 +7,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import graph_pack.IGraph;
-
 public class Graph <T extends Comparable<T>> implements IGraph {
 
 	private ArrayList<Vertex> vertexList;
@@ -169,7 +167,6 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 							  proposedVertex.setPredecessor(currentVertex);
 				              prioQ.update(proposedVertex, proposedVertex.getDistance());
 						  }
-			            
 			  }
 		}
 	}
