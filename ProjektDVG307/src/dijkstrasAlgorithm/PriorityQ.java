@@ -25,6 +25,7 @@ public class PriorityQ<DATA, WEIGHT extends Comparable<WEIGHT>>{
 	}
 
 	public void update(DATA vertix,WEIGHT distance) {
+		@SuppressWarnings("unchecked")
 		Node[] tempArray = (Node[]) Array.newInstance(Node.class, size());
 		int i = 0;
 		while(!isEmpty()){
