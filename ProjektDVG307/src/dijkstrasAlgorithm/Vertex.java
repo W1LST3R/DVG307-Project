@@ -7,12 +7,12 @@ public class Vertex {
 	private String name;
 	private double longitude;
 	private double latitude;
-	private int population;
+	private double population;
 	private ArrayList<Edge> ajencyList; //edges - lista med de edges som leder till närliggande vertexar ("adjency list")
 	private Vertex predecessor;//predecessor - den vertex av de närliggande som är nästa steg längs den kortaste vägen till startvertex
-	private int distance; //distance - avståndet från denna vertex till startvertex
+	private double distance; //distance - avståndet från denna vertex till startvertex
 	
-	public Vertex(String name, double longitude, double latitude, int population) {
+	public Vertex(String name, double longitude, double latitude, double population) {
 		setName(name);
 		setLongitude(longitude);
 		setLatitude(latitude);
@@ -44,10 +44,10 @@ public class Vertex {
 	public void setLatitude(double newLatitude) {
 		latitude = newLatitude;
 	}
-	public int getPopulation() {
+	public double getPopulation() {
 		return population;
 	}
-	public void setPopulation(int newPopulation) {
+	public void setPopulation(double newPopulation) {
 		population = newPopulation;
 	}
 	public ArrayList<Edge> getAjencyList() {
@@ -62,10 +62,10 @@ public class Vertex {
 	public void setPredecessor(Vertex newPredecessor) {
 		predecessor = newPredecessor;
 	}
-	public int getDistance() {
+	public double getDistance() {
 		return distance;
 	}
-	public void setDistance(int newDistance) {
+	public void setDistance(double newDistance) {
 		distance = newDistance;
 	}
 }

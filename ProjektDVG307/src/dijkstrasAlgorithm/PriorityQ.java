@@ -23,7 +23,7 @@ public class PriorityQ<DATA, WEIGHT extends Comparable<WEIGHT>>{
 		heap.insert(new Node(data, weight));
 	}
 
-	public void update(Vertex vertic,int distance) {
+	public void update(Vertex vertix,double distance) {
 		
 	}
 	
