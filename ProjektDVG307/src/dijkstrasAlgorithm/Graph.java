@@ -99,9 +99,10 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	@Override
 	public void connectVertices(String id1, String id2, double weight) {
 		Edge tempEdge = new Edge(vertexMap.get(id1), vertexMap.get(id2), weight);
+		Edge tempEdge2 = new Edge(vertexMap.get(id2), vertexMap.get(id1), weight);
 		edgeList.add(tempEdge);
 		vertexMap.get(id1).addEdge(tempEdge);
-		vertexMap.get(id2).addEdge(tempEdge);
+		vertexMap.get(id2).addEdge(tempEdge2);
 		
 	}
 	@Override
@@ -124,50 +125,59 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	public void findShortestPath(String start_id) {
 		// TODO Auto-generated method stub
 		PriorityQ prioQ = new PriorityQ(vertexList.size());
-		for(Vertex vertex : getVertices()) {
+		for (Vertex vertex : getVertices()) {
 			vertex.setPredecessor(null);
-	        if(vertex != vertexMap.get(start_id)) {
-	        	vertex.setDistance(9999999);
-	        }else {
-	        	 vertex.setDistance(0);
-		         prioQ.insert(vertex, vertex.getDistance());
-	        }
+			if (!vertex.getName().equals(start_id)) {
+				vertex.setDistance(9999999);
+			} else {
+				vertex.setDistance(0);
+				prioQ.insert(vertex, vertex.getDistance());
+			}
 		}
-		while(!prioQ.isEmpty()) {
-			  Vertex currentVertex = (Vertex) prioQ.extract();
-			  for(Edge edge : currentVertex.getEdges()) {
-				  Vertex proposedVertex = edge.getToVertex();
-						  if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
-							  proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
-							  proposedVertex.setPredecessor(currentVertex);
-				              prioQ.update(proposedVertex, proposedVertex.getDistance());
-						  }
-			            
-			  }
+		while (!prioQ.isEmpty()) {
+			Vertex currentVertex = (Vertex) prioQ.extract();
+			for (Edge edge : currentVertex.getEdges()) {
+				Vertex proposedVertex = edge.getToVertex();
+				if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
+					proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
+					proposedVertex.setPredecessor(currentVertex);
+					prioQ.update(proposedVertex, proposedVertex.getDistance());
+				}
+			}
 		}
 	}
 	@Override
 	public void findShortestPath(Vertex start_vertex) {
+		System.out.println("Executing Dijkstras Algoritm");
 		PriorityQ prioQ = new PriorityQ(vertexList.size());
-		for(Vertex vertex : getVertices()) {
+		for (Vertex vertex : getVertices()) {
 			vertex.setPredecessor(null);
-	        if(vertex != start_vertex) {
-	        	vertex.setDistance(9999999);
-	        }else {
-	        	 vertex.setDistance(0);
-		         prioQ.insert(vertex, vertex.getDistance());
-	        }
+			if (!vertex.getName().equals(start_vertex.getName())) {
+				vertex.setDistance(99999999);
+				//prioQ.insert(vertex, vertex.getDistance());
+			} else {
+				vertex.setDistance(0);
+				prioQ.insert(vertex, vertex.getDistance());
+			}
 		}
-		while(!prioQ.isEmpty()) {
-			  Vertex currentVertex = (Vertex) prioQ.extract();
-			  for(Edge edge : currentVertex.getEdges()) {
-				  Vertex proposedVertex = edge.getToVertex();
-						  if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
-							  proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
-							  proposedVertex.setPredecessor(currentVertex);
-				              prioQ.update(proposedVertex, proposedVertex.getDistance());
-						  }
-			  }
+
+		while (!prioQ.isEmpty()) {
+			String temp = prioQ.extract().toString();
+			//System.out.println(temp);
+			Vertex currentVertex = vertexMap.get(temp);
+			for (Edge edge : currentVertex.getEdges()) {
+				Vertex proposedVertex = edge.getToVertex();
+				//prioQ.insert(proposedVertex, proposedVertex.getDistance());
+				//System.out.println(proposedVertex.getName() + " > " + temp);
+				//System.out.println(proposedVertex.getDistance() + " > " + (currentVertex.getDistance() + edge.getWeight()));
+				if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
+					proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
+					proposedVertex.setPredecessor(currentVertex);
+					prioQ.update(proposedVertex, proposedVertex.getDistance());
+					//System.out.println(proposedVertex.getName());
+				}
+				//System.out.println("========");
+			}
 		}
 	}
 }
