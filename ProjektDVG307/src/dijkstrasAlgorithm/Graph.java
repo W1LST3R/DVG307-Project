@@ -10,9 +10,16 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
 	private HashMap<String,Vertex>  vertexMap;
+	private Vertex startVertex;
+	private Vertex targetVertex;
+
 	
-	public Graph(Vertex startVertex) {
-		// Tack förslaget Jonas H-H
+	
+	public Graph(Vertex start) {
+		startVertex = start;
+		vertexList = new ArrayList<>();
+		edgeList = new ArrayList<>();
+		vertexMap = new HashMap<>();
 	}
 	public void readVertexFile(String filename) {
 		
@@ -26,47 +33,7 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	public ArrayList<Edge> getEdges(){
 		return edgeList;
 	}
-	public void findShortestPath(int start, int destination){
-		PriorityQ prioQ = new PriorityQ(vertexList.size());
-		for(Vertex vertex : getVertices()) {
-			vertex.setPredecessor(null);
-	        if(vertex != vertexList.get(start)) {
-	        	vertex.setDistance(9999999);
-	        }else {
-	        	 vertex.setDistance(0);
-		         prioQ.insert(vertex, vertex.getDistance());
-	        }
-		}
-		while(!prioQ.isEmpty()) {
-			  Vertex currentVertex = (Vertex) prioQ.extract();
-			  for(Edge edge : currentVertex.getEdges()) {
-				  Vertex proposedVertex = edge.getToVertex();
-						  if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
-							  proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
-							  proposedVertex.setPredecessor(currentVertex);
-				              prioQ.update(proposedVertex, proposedVertex.getDistance());
-						  }
-			            
-			  }
-		}
-	    /*priorityQ prioQ = PriorityQ()
-	    foreach vertex in G.getVertices()
-	        vertex.setPredecessor(null)
-	        if vertex != start_vertex
-	            vertex.setDistance(största möjliga talvärde)
-	        else
-	            vertex.setDistance(0) # avståndet till start är ju 0
-	            prioQ.insert(vertex, vertex.getDistance())
-
-	    while ! prioQ.empty()
-	        currentV = prioQ.extract()
-	        foreach edge in currentV.getEdges()
-	            proposedV = edge.getVertex()
-	            if proposedV.getDistance() > currentV.getDistance() + edge.getWeight()
-	                proposedV.setDistance(currentV.getDistance() + edge.getWeight())
-	                proposedV.setPredecessor(currentV)
-	                prioQ.update(proposedV, proposedV.getDistance())*/
-	}
+	
 	@Override
 	public void addVertex(String id, double population, double longitude, double latitude) {
 		Vertex tempVertex = new Vertex(id, longitude, latitude, population);
@@ -75,29 +42,27 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	}
 	@Override
 	public void connectVertices(String id1, String id2, double weight) {
-		// TODO Auto-generated method stub
 		Edge tempEdge = new Edge(vertexMap.get(id1), vertexMap.get(id1), weight);
 		edgeList.add(tempEdge);
 		vertexMap.get(id1).addEdge(tempEdge);
+		vertexMap.get(id2).addEdge(tempEdge);
 		
 	}
 	@Override
 	public Vertex getStartVertex() {
-		return null;
+		return startVertex;
 	}
 	@Override
 	public void setTargetVertex(Vertex target) {
-		// TODO Auto-generated method stub
-		
+		targetVertex = target;
 	}
 	@Override
 	public Vertex getTargetVertex() {
-		return null;
+		return targetVertex;
 	}
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		targetVertex = null;
 	}
 	@Override
 	public void findShortestPath(String start_id) {
@@ -127,7 +92,27 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	}
 	@Override
 	public void findShortestPath(Vertex start_vertex) {
-		// TODO Auto-generated method stub
-		
+		PriorityQ prioQ = new PriorityQ(vertexList.size());
+		for(Vertex vertex : getVertices()) {
+			vertex.setPredecessor(null);
+	        if(vertex != start_vertex) {
+	        	vertex.setDistance(9999999);
+	        }else {
+	        	 vertex.setDistance(0);
+		         prioQ.insert(vertex, vertex.getDistance());
+	        }
+		}
+		while(!prioQ.isEmpty()) {
+			  Vertex currentVertex = (Vertex) prioQ.extract();
+			  for(Edge edge : currentVertex.getEdges()) {
+				  Vertex proposedVertex = edge.getToVertex();
+						  if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
+							  proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
+							  proposedVertex.setPredecessor(currentVertex);
+				              prioQ.update(proposedVertex, proposedVertex.getDistance());
+						  }
+			            
+			  }
+		}
 	}
 }
