@@ -2,18 +2,40 @@ package dijkstrasAlgorithm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import graph_pack.IGraph;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
-public class Graph <T extends Comparable<T>> {
+public class Graph <T extends Comparable<T>> implements IGraph {
 
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
-	private HashMap<String,Vertex>  vertexMap;
+	private HashMap<String,Vertex> vertexMap;
 	
-	public Graph(int startVertex) {
+	public Graph() {
 		// Tack förslaget Jonas H-H
 	}
 	public void readVertexFile(String filename) {
-		
+
+		Scanner scanner;
+		try {
+			scanner = new Scanner(new File(filename));
+			scanner.nextLine(); // hoppa över första raden
+			scanner.useDelimiter(";");
+			while(scanner.hasNext()) {
+				addVertex(
+						scanner.next(), // name/id
+						Double.parseDouble(scanner.next()), // population
+						Double.parseDouble(scanner.next()), //longitude
+						Double.parseDouble(scanner.next()) // latitude
+						);
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void readEdgeFile(String filename){
 		
@@ -64,5 +86,45 @@ public class Graph <T extends Comparable<T>> {
 	                proposedV.setDistance(currentV.getDistance() + edge.getWeight())
 	                proposedV.setPredecessor(currentV)
 	                prioQ.update(proposedV, proposedV.getDistance())*/
+	}
+	@Override
+	public void addVertex(String id, double population, double longitude, double latitude) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void connectVertices(String id1, String id2, double weight) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Vertex getStartVertex() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setTargetVertex(Vertex target) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Vertex getTargetVertex() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void findShortestPath(String start_id) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void findShortestPath(Vertex start_vertex) {
+		// TODO Auto-generated method stub
+		
 	}
 }
