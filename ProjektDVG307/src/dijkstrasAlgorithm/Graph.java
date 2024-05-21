@@ -124,6 +124,7 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	@Override
 	public void clear() {
 		targetVertex = null;
+		startVertex = null;
 	}
 	@Override
 	public void findShortestPath(String start_id) {
