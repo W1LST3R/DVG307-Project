@@ -23,28 +23,7 @@ public class PriorityQ<DATA, WEIGHT extends Comparable<WEIGHT>>{
 	public void insert(DATA data, WEIGHT weight) {
 		heap.insert(new Node(data, weight));
 	}
-	/*
-	public void update(DATA vertix,WEIGHT distance) {
-		Node[] tempArray = (Node[]) Array.newInstance(Node.class, size());
-		int i = 0;
-		while(!isEmpty()){
-			Node tempNode = heap.extract();
-			//System.out.println(vertix);
-			//System.out.println(tempNode.getData());
-			//System.out.println(vertix==tempNode.getData());
-			if(vertix == tempNode.getData()) {
-				if(tempNode.getWeight().compareTo(distance) > 1) {
-					tempArray[i] = new Node(vertix,distance);
-				}else {
-					tempArray[i] = new Node(tempNode.getData(), tempNode.getWeight());
-				}
-			}else tempArray[i] =  new Node(tempNode.getData(), tempNode.getWeight());
-			i++;
-		}
-		for(int j = 0; j < tempArray.length;j++) {
-			insert(tempArray[j].data, tempArray[j].weight);
-		}
-	}*/
+
 	public void update(DATA vertix,WEIGHT distance) {
 		@SuppressWarnings("unchecked")
 		Node[] tempArray = (Node[]) Array.newInstance(Node.class, size()+1);
