@@ -9,6 +9,7 @@ public interface IGraph
   public void addVertex(String id, double population, double longitude, double latitude);
   public void connectVertices(String id1, String id2, double weight);
   public List<Vertex> getVertices();
+  public void setStartVertex(Vertex start);
   public Vertex getStartVertex();
   public void setTargetVertex(Vertex target);
   public Vertex getTargetVertex();

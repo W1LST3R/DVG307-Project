@@ -16,7 +16,7 @@ import dijkstrasAlgorithm.Vertex;
 public class DemoApp extends JFrame
   {
   private MapPanel mapPanel;
-  private Graph graph = new Graph(new Vertex("Gävle", 100000, 100, 8));
+  private Graph graph = new Graph(); //"Falun", 40000, 10, 3 //"Gävle", 100000, 100, 8
 
   public DemoApp()
     {
@@ -57,8 +57,8 @@ public class DemoApp extends JFrame
                 + "<tr><td><b>&#8592</b></td><td>Rotate left</td></tr>"
                 + "<tr><td><b>&#8594</b></td><td>Rotate right</td></tr>"
                 + "<tr><td><b>C</b></td><td>Reset</td></tr>"
-                + "<tr><td><b>ENTER</b></td><td>Reset</td></tr>"
-                + "<tr><td><b>SPACE</b></td><td>Reset</td></tr>"
+                + "<tr><td><b>ENTER</b></td><td>Choose points</td></tr>"
+                + "<tr><td><b>SPACE</b></td><td>Choose only start point</td></tr>"
                 + "</table>";
     JOptionPane.showMessageDialog(this, html, "Keyboard Commands", JOptionPane.PLAIN_MESSAGE);
     }
