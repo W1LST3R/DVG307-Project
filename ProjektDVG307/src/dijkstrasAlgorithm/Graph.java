@@ -106,6 +106,10 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 		
 	}
 	@Override
+	public void setStartVertex(Vertex start) {
+		startVertex = start;
+	}
+	@Override
 	public Vertex getStartVertex() {
 		return startVertex;
 	}
@@ -120,6 +124,7 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	@Override
 	public void clear() {
 		targetVertex = null;
+		startVertex = null;
 	}
 	@Override
 	public void findShortestPath(String start_id) {
@@ -148,7 +153,7 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	}
 	@Override
 	public void findShortestPath(Vertex start_vertex) {
-		System.out.println("Executing Dijkstras Algoritm");
+		System.out.println("Executing Dijkstras Algoritm: from " + getStartVertex() + " to " + getTargetVertex());
 		PriorityQ prioQ = new PriorityQ(vertexList.size());
 		for (Vertex vertex : getVertices()) {
 			vertex.setPredecessor(null);

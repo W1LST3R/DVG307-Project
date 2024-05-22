@@ -4,13 +4,18 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import dijkstrasAlgorithm.Edge;
 import dijkstrasAlgorithm.Vertex;
 
@@ -61,6 +66,38 @@ public class MapPanel extends JPanel
       }  
     }
   
+	public void showDialog() {
+		JPanel dialog = new JPanel(new GridLayout(2, 2));
+		
+		JTextField fromVertex = new JTextField();
+		JTextField toVertex = new JTextField();
+		
+		dialog.add(new JLabel("Start"));
+		dialog.add(fromVertex);
+		dialog.add(new JLabel("End"));
+		dialog.add(toVertex);
+		
+		int dialogResult = JOptionPane.showConfirmDialog(null, dialog, "Choose route", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if (dialogResult == 0)
+			if(!fromVertex.getText().isBlank() && !toVertex.getText().isBlank()) {
+				// set fromVertex and toVertex
+				for(Vertex v : model.getVertices()) {
+					if(model.getStartVertex() == null && v.getName().equals(fromVertex.getText())) model.setStartVertex(v);
+					if(model.getTargetVertex() == null && v.getName().equals(toVertex.getText())) model.setTargetVertex(v);
+				}
+				
+				if(model.getStartVertex() != null && model.getTargetVertex() != null)
+					model.findShortestPath(model.getStartVertex()); // run algorithm
+				else {
+					String errOut = "";
+					if(model.getStartVertex() == null) errOut += "'" + fromVertex.getText() + "' does not exist | ";
+					if(model.getTargetVertex() == null) errOut += "'" + toVertex.getText() + "' does not exist";
+					JOptionPane.showMessageDialog(null, new JLabel(errOut));
+				}
+			}
+	}
+  
   public void addListeners()
     {
     this.addKeyListener(new KeyAdapter() {
@@ -69,8 +106,12 @@ public class MapPanel extends JPanel
       switch(e.getKeyCode())
         {
         case KeyEvent.VK_ENTER:
+        	showDialog();
+        	break;
         case KeyEvent.VK_SPACE:
-        	model.findShortestPath(model.getStartVertex());
+        	if(model.getStartVertex() != null)
+        		model.findShortestPath(model.getStartVertex());
+        	else System.err.println("StartVertex is null");
         	break;
         case KeyEvent.VK_C: // clear
           model.clear();
@@ -107,7 +148,9 @@ public class MapPanel extends JPanel
             if(sv != null && v != sv)
               model.setTargetVertex(v);
             else
-              model.findShortestPath(v);
+            	if(model.getStartVertex() != null)
+            		model.findShortestPath(model.getStartVertex());
+            	else System.err.println("StartVertex is null");
             }
           else
             model.clear();
