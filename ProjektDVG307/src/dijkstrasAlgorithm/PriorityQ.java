@@ -35,7 +35,6 @@ public class PriorityQ<DATA, WEIGHT extends Comparable<WEIGHT>>{
 			if(vertix == tempNode.getData()) {
 				if(tempNode.getWeight().compareTo(distance) > 1) {
 					flag = i;
-					//tempArray[i] = new Node(vertix,distance);
 				}else {
 					flag = i;
 					tempArray[0] = new Node(tempNode.getData(), tempNode.getWeight());

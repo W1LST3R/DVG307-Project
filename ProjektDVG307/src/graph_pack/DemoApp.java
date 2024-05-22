@@ -84,10 +84,10 @@ public class DemoApp extends JFrame
     }
   private void loadData()
     {
-    graph.readVertexFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\760_tatorter.csv");
-    graph.readEdgeFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\edges_760_tatorter.csv");
+	  graph.readVertexFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\760_tatorter.csv");
+	  graph.readEdgeFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\edges_760_tatorter.csv");
     // Demo. Replace by reading the data files
-	  /*
+    /* 
     graph.addVertex("Gävle", 100000, 100, 8);
     graph.addVertex("Valbo", 5000, 90, 5);
     graph.addVertex("Sandviken", 30000, 79, 4);
@@ -108,8 +108,8 @@ public class DemoApp extends JFrame
     graph.connectVertices("Sandviken", "Falun", 69000);
     graph.connectVertices("Falun", "Edsbyn", 100000);
     graph.connectVertices("Edsbyn", "Bollnäs", 35000);
-    graph.connectVertices("Bollnäs", "Tönnebro", 50000);
-    */
+    graph.connectVertices("Bollnäs", "Tönnebro", 50000); */
+    
     }
   
   public static void main(String [] args)

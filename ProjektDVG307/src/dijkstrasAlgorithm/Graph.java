@@ -154,7 +154,6 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 			vertex.setPredecessor(null);
 			if (!vertex.getName().equals(start_vertex.getName())) {
 				vertex.setDistance(99999999);
-				//prioQ.insert(vertex, vertex.getDistance());
 			} else {
 				vertex.setDistance(0);
 				prioQ.insert(vertex, vertex.getDistance());
@@ -163,20 +162,14 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 
 		while (!prioQ.isEmpty()) {
 			String temp = prioQ.extract().toString();
-			//System.out.println(temp);
 			Vertex currentVertex = vertexMap.get(temp);
 			for (Edge edge : currentVertex.getEdges()) {
 				Vertex proposedVertex = edge.getToVertex();
-				//prioQ.insert(proposedVertex, proposedVertex.getDistance());
-				//System.out.println(proposedVertex.getName() + " > " + temp);
-				//System.out.println(proposedVertex.getDistance() + " > " + (currentVertex.getDistance() + edge.getWeight()));
 				if (proposedVertex.getDistance() > (currentVertex.getDistance() + edge.getWeight())) {
 					proposedVertex.setDistance(currentVertex.getDistance() + edge.getWeight());
 					proposedVertex.setPredecessor(currentVertex);
 					prioQ.update(proposedVertex, proposedVertex.getDistance());
-					//System.out.println(proposedVertex.getName());
 				}
-				//System.out.println("========");
 			}
 		}
 	}
