@@ -14,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import com.opencsv.CSVWriter;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -95,6 +94,40 @@ public class MapPanel extends JPanel
 	  	model.readEdgeFile(edgePath);
 }
 
+  public void getPaths()
+  { 
+	  
+	  	model.clear();
+		JPanel dialog = new JPanel(new GridLayout(2, 2));
+		
+		JTextField vertexFileName = new JTextField();
+		JTextField edgeFileName = new JTextField();
+		String vertexFile;
+		String edgeFile;
+		
+		dialog.add(new JLabel("Vertex File Name"));
+		dialog.add(vertexFileName);
+		dialog.add(new JLabel("Edge File Name"));
+		dialog.add(edgeFileName);
+		
+		int dialogResult = JOptionPane.showConfirmDialog(null, dialog, "Choose file names", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if (dialogResult == 0)
+			if(!vertexFileName.getText().isBlank() && !edgeFileName.getText().isBlank()) {
+				// set fromVertex and toVertex
+				vertexFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+vertexFileName.getText()+".csv";
+				edgeFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+edgeFileName.getText()+".csv";
+				if(!vertexFile.equals(edgeFile))
+					loadFiles(vertexFile, edgeFile); // run algorithm
+				else {
+					String errOut = "Cant be same file name!!";
+					JOptionPane.showMessageDialog(null, new JLabel(errOut));
+				}
+			}
+      // first create file object for file placed at location 
+      // specified by filepath 
+  } 
+  
   
   public void writeDataForTest() 
   { 
@@ -141,6 +174,8 @@ public class MapPanel extends JPanel
           // create FileWriter object with file as parameter 
           FileWriter outputfilevertex = new FileWriter(fileVertex); 
           CsvWriterSettings settings = new CsvWriterSettings();
+          settings.getFormat().setLineSeparator("\n");
+          settings.trimValues(false);
           // create CSVWriter object filewriter object as parameter 
           CsvWriter writerVertex = new CsvWriter(outputfilevertex,settings); 
     
@@ -153,17 +188,15 @@ public class MapPanel extends JPanel
     
           // adding header to csv 
           String[] headerEdges = { "From;To;Length in meter"}; 
-          writerVertex.writeHeaders(headerVertex);
-          writerEdges.writeHeaders(headerEdges); 
-    
+          writerVertex.writeRow(headerVertex);
+          writerEdges.writeRow(headerEdges); 
           // add data to csv 
           for(int i = 0; i < nbrOfElements;i++) {
         	  int bef = 5000+(int)(50000*Math.random()+1);
-        	  String str ="a"+i+";"+bef+";"+15.774151+";"+61.099355;
-        	  String[] dataVertex =  {str}; 
+        	  //String str =;
+        	  String dataVertex =  "a"+i+";"+bef+";"+"15,774151;61,099355"; 
         	  writerVertex.writeRow(dataVertex);
           }
-          
           writerVertex.close();
           for(int i = 0; i < nbrOfElements-1;i++) {
         	  int dist = 2000 +(int)(50000*Math.random()+1);
@@ -171,7 +204,7 @@ public class MapPanel extends JPanel
         	  writerEdges.writeRow(dataEdges);  
         	  if(i<nbrOfElements/2) {
         		  dist = 2000 +(int)(50000*Math.random()+1);
-        		  dataEdges = "a"+i+";a"+(nbrOfElements-i)+";"+dist;
+        		  dataEdges = "a"+i+";a"+((nbrOfElements-1)-i)+";"+dist;
         		  writerEdges.writeRow(dataEdges);
         	  }
           }
@@ -185,7 +218,7 @@ public class MapPanel extends JPanel
           // TODO Auto-generated catch block 
           e.printStackTrace(); 
       } 
-      loadFiles(vertexFile, edgeFile);
+      //loadFiles(vertexFile, edgeFile);
   }
   
   
@@ -266,6 +299,9 @@ public class MapPanel extends JPanel
         case KeyEvent.VK_C: // clear
           model.clear();
           break;
+        case KeyEvent.VK_S: // clear
+            getPaths();
+            break;
         case KeyEvent.VK_X: // clear
             model.superClear();
             break;

@@ -62,8 +62,9 @@ public class DemoApp extends JFrame
                 + "<tr><td><b>SPACE</b></td><td>Choose only start point</td></tr>"
                 + "<tr><td><b>T</b></td><td>Run Dijiksatra on all nodes</td></tr>"
                 + "<tr><td><b>X</b></td><td>Clear all data</td></tr>"
-                + "<tr><td><b>W</b></td><td>Makes on data for testing</td></tr>"
+                + "<tr><td><b>W</b></td><td>Makes data for testing</td></tr>"
                 + "<tr><td><b>L</b></td><td>Loads original data</td></tr>"
+                + "<tr><td><b>S</b></td><td>Choose csv file name in H:\\git\\DVG307-Project\\ProjektDVG307\\src\\yourfileName no need for .csv</td></tr>"
                 + "</table>";
     JOptionPane.showMessageDialog(this, html, "Keyboard Commands", JOptionPane.PLAIN_MESSAGE);
     }

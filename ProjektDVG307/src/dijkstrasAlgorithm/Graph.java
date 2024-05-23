@@ -40,17 +40,18 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 				scanRow = new Scanner(row);
 				scanRow.useDelimiter(";");
 				while(scanRow.hasNext()) {
-					String str = scanRow.next();
-					String str2 = scanRow.next();
-					String str3 = scanRow.next();
-					String str4 = scanRow.next();
-					System.out.println(str4);
+					String name = scanRow.next();
+					String bef = scanRow.next();
+					String lon = scanRow.next();
+					String lat = scanRow.next();
+					if(lat.charAt(lat.length()-1) =='"'){
+						lat = lat.substring(0,lat.length()-1);
+					}
 					addVertex(
-							str,
-							//string =scanRow.next(), // name/id
-							Double.parseDouble(str2), // population
-							Double.parseDouble(str3.replace(",", ".")), //longitude
-							Double.parseDouble(str4.replace(",", ".")) // latitude
+							name, // name/id
+							Double.parseDouble(bef), // population
+							Double.parseDouble(lon.replace(",", ".")), //longitude
+							Double.parseDouble(lat.replace(",", ".")) // latitude
 							);
 					
 				}
@@ -109,6 +110,8 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 		Edge tempEdge = new Edge(vertexMap.get(id1), vertexMap.get(id2), weight);
 		Edge tempEdge2 = new Edge(vertexMap.get(id2), vertexMap.get(id1), weight);
 		edgeList.add(tempEdge);
+		System.out.println(vertexMap.get(id1).getName());
+		System.out.println(vertexMap.get(id2).getName());
 		vertexMap.get(id1).addEdge(tempEdge);
 		vertexMap.get(id2).addEdge(tempEdge2);
 		
