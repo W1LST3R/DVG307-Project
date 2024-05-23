@@ -11,11 +11,19 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import com.opencsv.CSVWriter;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.junit.jupiter.params.shadow.com.univocity.parsers.csv.CsvWriter;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.csv.CsvWriterSettings;
+
 import dijkstrasAlgorithm.Edge;
 import dijkstrasAlgorithm.Vertex;
 
@@ -65,8 +73,124 @@ public class MapPanel extends JPanel
         }
       }  
     }
+  public void runTest() {
+	  double t1 = System.currentTimeMillis();
+	  int totNodes= 0;
+	  for(Vertex v : model.getVertices()) {
+		  totNodes++;
+		  model.findShortestPath(v);
+		  model.clear();
+	  }
+	  double t2 = System.currentTimeMillis();
+	  String timeForTest = "The time it took to do Dijikstra on nodes "+totNodes+" was: "+(t2-t1)+" ms";
+	  JOptionPane.showMessageDialog(null, new JLabel(timeForTest));
+  }
+  public void loadFiles() {
+  		model.readVertexFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\760_tatorter.csv");
+	  	model.readEdgeFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\edges_760_tatorter.csv");
+  }
+  
+  public void loadFiles(String vertexPath, String edgePath) {
+		model.readVertexFile(vertexPath);
+	  	model.readEdgeFile(edgePath);
+}
+
+  
+  public void writeDataForTest() 
+  { 
+	  
+	  	model.clear();
+		JPanel dialog = new JPanel(new GridLayout(3, 2));
+		
+		JTextField vertexFileName = new JTextField();
+		JTextField edgeFileName = new JTextField();
+		JTextField number = new JTextField();
+		String vertexFile;
+		String edgeFile;
+		int nbrElements = 0;
+		
+		dialog.add(new JLabel("Vertex File Name"));
+		dialog.add(vertexFileName);
+		dialog.add(new JLabel("Edge File Name"));
+		dialog.add(edgeFileName);
+		dialog.add(new JLabel("Number Of Elements"));
+		dialog.add(number);
+		
+		int dialogResult = JOptionPane.showConfirmDialog(null, dialog, "Choose file names", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if (dialogResult == 0)
+			if(!vertexFileName.getText().isBlank() && !edgeFileName.getText().isBlank()&& !number.getText().isBlank()) {
+				// set fromVertex and toVertex
+				vertexFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+vertexFileName.getText()+".csv";
+				edgeFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+edgeFileName.getText()+".csv";
+				nbrElements = Integer.parseInt(number.getText());
+				if(!vertexFile.equals(edgeFile))
+					makeFiles(vertexFile,edgeFile,nbrElements); // run algorithm
+				else {
+					String errOut = "Cant be same file name!!";
+					JOptionPane.showMessageDialog(null, new JLabel(errOut));
+				}
+			}
+      // first create file object for file placed at location 
+      // specified by filepath 
+  } 
+  public void makeFiles(String vertexFile,String edgeFile, int nbrOfElements) {
+	  File fileVertex = new File(vertexFile); 
+	  File fileEdge = new File(edgeFile); 
+      try { 
+          // create FileWriter object with file as parameter 
+          FileWriter outputfilevertex = new FileWriter(fileVertex); 
+          CsvWriterSettings settings = new CsvWriterSettings();
+          // create CSVWriter object filewriter object as parameter 
+          CsvWriter writerVertex = new CsvWriter(outputfilevertex,settings); 
+    
+          // adding header to csv 
+          String[] headerVertex = { "TATORT;BEF;lon;lat"}; 
+          
+          FileWriter outputfileEdges = new FileWriter(fileEdge); 
+          // create CSVWriter object filewriter object as parameter 
+          CsvWriter writerEdges = new CsvWriter(outputfileEdges,settings); 
+    
+          // adding header to csv 
+          String[] headerEdges = { "From;To;Length in meter"}; 
+          writerVertex.writeHeaders(headerVertex);
+          writerEdges.writeHeaders(headerEdges); 
+    
+          // add data to csv 
+          for(int i = 0; i < nbrOfElements;i++) {
+        	  int bef = 5000+(int)(50000*Math.random()+1);
+        	  String str ="a"+i+";"+bef+";"+15.774151+";"+61.099355;
+        	  String[] dataVertex =  {str}; 
+        	  writerVertex.writeRow(dataVertex);
+          }
+          
+          writerVertex.close();
+          for(int i = 0; i < nbrOfElements-1;i++) {
+        	  int dist = 2000 +(int)(50000*Math.random()+1);
+        	  String dataEdges = "a"+i+";a"+(i+1)+";"+dist;
+        	  writerEdges.writeRow(dataEdges);  
+        	  if(i<nbrOfElements/2) {
+        		  dist = 2000 +(int)(50000*Math.random()+1);
+        		  dataEdges = "a"+i+";a"+(nbrOfElements-i)+";"+dist;
+        		  writerEdges.writeRow(dataEdges);
+        	  }
+          }
+         
+
+          // closing writer connection 
+ 
+          writerEdges.close();
+      } 
+      catch (IOException e) { 
+          // TODO Auto-generated catch block 
+          e.printStackTrace(); 
+      } 
+      loadFiles(vertexFile, edgeFile);
+  }
+  
   
 	public void showDialog() {
+		model.clear();
 		JPanel dialog = new JPanel(new GridLayout(2, 2));
 		
 		JTextField fromVertex = new JTextField();
@@ -97,6 +221,34 @@ public class MapPanel extends JPanel
 				}
 			}
 	}
+	
+	public void showDialogOnlyStart() {
+		model.clear();
+		JPanel dialog = new JPanel(new GridLayout(1, 2));
+		
+		JTextField fromVertex = new JTextField();
+		
+		dialog.add(new JLabel("Start"));
+		dialog.add(fromVertex);
+		
+		int dialogResult = JOptionPane.showConfirmDialog(null, dialog, "Choose route", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if (dialogResult == 0)
+			if(!fromVertex.getText().isBlank()) {
+				// set fromVertex and toVertex
+				for(Vertex v : model.getVertices()) {
+					if(model.getStartVertex() == null && v.getName().equals(fromVertex.getText())) model.setStartVertex(v);
+				}
+				
+				if(model.getStartVertex() != null)
+					model.findShortestPath(model.getStartVertex()); // run algorithm
+				else {
+					String errOut = "";
+					if(model.getStartVertex() == null) errOut += "'" + fromVertex.getText() + "' does not exist | ";
+					JOptionPane.showMessageDialog(null, new JLabel(errOut));
+				}
+			}
+	}
   
   public void addListeners()
     {
@@ -109,13 +261,24 @@ public class MapPanel extends JPanel
         	showDialog();
         	break;
         case KeyEvent.VK_SPACE:
-        	if(model.getStartVertex() != null)
-        		model.findShortestPath(model.getStartVertex());
-        	else System.err.println("StartVertex is null");
+        	showDialogOnlyStart();
         	break;
         case KeyEvent.VK_C: // clear
           model.clear();
           break;
+        case KeyEvent.VK_X: // clear
+            model.superClear();
+            break;
+            
+        case KeyEvent.VK_W: // clear
+            writeDataForTest();
+            break;
+        case KeyEvent.VK_L: // clear
+        	loadFiles();
+            break;
+        case KeyEvent.VK_T: // Load data for test
+            runTest();
+            break;
         case KeyEvent.VK_LEFT: // rot left
           rotation -= 0.05;
         break;
@@ -128,7 +291,7 @@ public class MapPanel extends JPanel
 
     public void keyReleased(KeyEvent e)
       {
-      repaint();
+	    	 repaint();
       }
     });
     

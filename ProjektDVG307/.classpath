@@ -7,5 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="//hig-ad/student/homes/Git/DVG307-Project/opencsv-5.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

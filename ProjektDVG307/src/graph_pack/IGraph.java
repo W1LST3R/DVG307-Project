@@ -16,4 +16,7 @@ public interface IGraph
   public void clear(); // resets startVertex and targetVertex
   public void findShortestPath(String start_id);
   public void findShortestPath(Vertex start_vertex);
+  public void superClear();
+public void readVertexFile(String string);
+public void readEdgeFile(String string);
   }

@@ -36,15 +36,23 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 			scanLine.nextLine(); // hoppa över första raden
 			
 			while(scanLine.hasNextLine()) {
-				scanRow = new Scanner(scanLine.next());
+				String row = scanLine.next();
+				scanRow = new Scanner(row);
 				scanRow.useDelimiter(";");
 				while(scanRow.hasNext()) {
+					String str = scanRow.next();
+					String str2 = scanRow.next();
+					String str3 = scanRow.next();
+					String str4 = scanRow.next();
+					System.out.println(str4);
 					addVertex(
-							scanRow.next(), // name/id
-							Double.parseDouble(scanRow.next()), // population
-							Double.parseDouble(scanRow.next().replace(",", ".")), //longitude
-							Double.parseDouble(scanRow.next().replace(",", ".")) // latitude
+							str,
+							//string =scanRow.next(), // name/id
+							Double.parseDouble(str2), // population
+							Double.parseDouble(str3.replace(",", ".")), //longitude
+							Double.parseDouble(str4.replace(",", ".")) // latitude
 							);
+					
 				}
 			}
 			
@@ -125,6 +133,18 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	public void clear() {
 		targetVertex = null;
 		startVertex = null;
+		for (Vertex vertex : getVertices()) {
+			vertex.setPredecessor(null);
+			vertex.setDistance(0);
+		}
+		
+	}
+	public void superClear() {
+		targetVertex = null;
+		startVertex = null;
+		vertexList = new ArrayList<>();
+		edgeList = new ArrayList<>();
+		vertexMap = new HashMap<>();
 	}
 	@Override
 	public void findShortestPath(String start_id) {
