@@ -109,9 +109,6 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	public void connectVertices(String id1, String id2, double weight) {
 		Edge tempEdge = new Edge(vertexMap.get(id1), vertexMap.get(id2), weight);
 		Edge tempEdge2 = new Edge(vertexMap.get(id2), vertexMap.get(id1), weight);
-		edgeList.add(tempEdge);
-		System.out.println(vertexMap.get(id1).getName());
-		System.out.println(vertexMap.get(id2).getName());
 		vertexMap.get(id1).addEdge(tempEdge);
 		vertexMap.get(id2).addEdge(tempEdge2);
 		
@@ -176,7 +173,7 @@ public class Graph <T extends Comparable<T>> implements IGraph {
 	}
 	@Override
 	public void findShortestPath(Vertex start_vertex) {
-		System.out.println("Executing Dijkstras Algoritm: from " + getStartVertex() + " to " + getTargetVertex());
+		//System.out.println("Executing Dijkstras Algoritm: from " + getStartVertex() + " to " + getTargetVertex());
 		PriorityQ prioQ = new PriorityQ(vertexList.size());
 		for (Vertex vertex : getVertices()) {
 			vertex.setPredecessor(null);

@@ -77,6 +77,7 @@ public class MapPanel extends JPanel
 	  int totNodes= 0;
 	  for(Vertex v : model.getVertices()) {
 		  totNodes++;
+		  model.setStartVertex(v);
 		  model.findShortestPath(v);
 		  model.clear();
 	  }
@@ -180,7 +181,7 @@ public class MapPanel extends JPanel
           CsvWriter writerVertex = new CsvWriter(outputfilevertex,settings); 
     
           // adding header to csv 
-          String[] headerVertex = { "TATORT;BEF;lon;lat"}; 
+          String[] headerVertex = { "TATORT;BEF;lon;lat"};
           
           FileWriter outputfileEdges = new FileWriter(fileEdge); 
           // create CSVWriter object filewriter object as parameter 
@@ -194,7 +195,7 @@ public class MapPanel extends JPanel
           for(int i = 0; i < nbrOfElements;i++) {
         	  int bef = 5000+(int)(50000*Math.random()+1);
         	  //String str =;
-        	  String dataVertex =  "a"+i+";"+bef+";"+"15,774151;61,099355"; 
+        	  String dataVertex =  "a"+i+";"+bef+";"+"15,774151;61,099355";
         	  writerVertex.writeRow(dataVertex);
           }
           writerVertex.close();
@@ -204,7 +205,7 @@ public class MapPanel extends JPanel
         	  writerEdges.writeRow(dataEdges);  
         	  if(i<nbrOfElements/2) {
         		  dist = 2000 +(int)(50000*Math.random()+1);
-        		  dataEdges = "a"+i+";a"+((nbrOfElements-1)-i)+";"+dist;
+        		  dataEdges = "a"+i+";a"+((nbrOfElements/2)+i)+";"+dist;
         		  writerEdges.writeRow(dataEdges);
         	  }
           }
