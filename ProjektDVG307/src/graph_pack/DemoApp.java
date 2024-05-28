@@ -65,6 +65,7 @@ public class DemoApp extends JFrame
                 + "<tr><td><b>W</b></td><td>Makes data for testing</td></tr>"
                 + "<tr><td><b>L</b></td><td>Loads original data</td></tr>"
                 + "<tr><td><b>S</b></td><td>Choose csv file name in H:\\git\\DVG307-Project\\ProjektDVG307\\src\\yourfileName no need for .csv</td></tr>"
+                + "<tr><td><b>O</b></td><td>Run test on specific node</td></tr>"
                 + "</table>";
     JOptionPane.showMessageDialog(this, html, "Keyboard Commands", JOptionPane.PLAIN_MESSAGE);
     }

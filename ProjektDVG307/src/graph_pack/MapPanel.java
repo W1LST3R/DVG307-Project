@@ -72,6 +72,49 @@ public class MapPanel extends JPanel
         }
       }  
     }
+  
+  public void runTestOneRun() {
+		model.clear();
+		JPanel dialog = new JPanel(new GridLayout(1, 2));
+		
+		JTextField fromVertex = new JTextField();
+		
+		dialog.add(new JLabel("Start"));
+		dialog.add(fromVertex);
+		
+		int dialogResult = JOptionPane.showConfirmDialog(null, dialog, "Choose route", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if (dialogResult == 0)
+			if(!fromVertex.getText().isBlank()) {
+				// set fromVertex and toVertex
+				for(Vertex v : model.getVertices()) {
+					if(model.getStartVertex() == null && v.getName().equals(fromVertex.getText())) model.setStartVertex(v);
+				}
+				
+				if(model.getStartVertex() != null) {
+					int times = 5;
+					double t1 = 0;
+					double t2 = 0;
+					for(int i = 0; i <times;i++ ) {
+						Vertex startVertex = model.getStartVertex();
+						t1 += System.currentTimeMillis();
+						model.findShortestPath(startVertex); // run algorithm
+						t2 += System.currentTimeMillis();
+						model.clear();
+						model.setStartVertex(startVertex);
+					}
+					t1 = t1/times;
+					t2 = t2/times;
+					String timeForTest = "The time it took to do Dijikstra on node "+model.getStartVertex()+" was: "+(t2-t1)+" ms";
+					JOptionPane.showMessageDialog(null, new JLabel(timeForTest));
+				}else {
+					String errOut = "";
+					if(model.getStartVertex() == null) errOut += "'" + fromVertex.getText() + "' does not exist | ";
+					JOptionPane.showMessageDialog(null, new JLabel(errOut));
+				}
+			}
+	}
+  
   public void runTest() {
 	  double t1 = System.currentTimeMillis();
 	  int totNodes= 0;
@@ -315,6 +358,9 @@ public class MapPanel extends JPanel
             break;
         case KeyEvent.VK_T: // Load data for test
             runTest();
+            break;
+        case KeyEvent.VK_O: // Load data for test
+        	runTestOneRun();
             break;
         case KeyEvent.VK_LEFT: // rot left
           rotation -= 0.05;
