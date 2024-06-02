@@ -257,7 +257,7 @@ public class MapPanel extends JPanel
   }
   
   //Runs Dijkstra's algorithm with a specified start and end vertex, the result will show the shortest path between start and end vertex
-	public void dijksraWithStartEnd() {
+	public void dijkstraWithStartEnd() {
 		model.clear();
 		JPanel dialog = new JPanel(new GridLayout(2, 2));
 		
@@ -290,7 +290,7 @@ public class MapPanel extends JPanel
 			}
 	}
 	//Runs Dijkstra's algorithm with a specified start, the result will show the shortest path from start vertex to every other vertex
-	public void dijksraWithStart() {
+	public void dijkstraWithStart() {
 		model.clear();
 		JPanel dialog = new JPanel(new GridLayout(1, 2));
 		
@@ -326,10 +326,10 @@ public class MapPanel extends JPanel
       switch(e.getKeyCode())
         {
         case KeyEvent.VK_ENTER: // run Dijkstra on a specific start node and end node
-        	dijksraWithStartEnd();
+        	dijkstraWithStartEnd();
         	break;
         case KeyEvent.VK_SPACE: // run Dijkstra on a specific start node
-        	dijksraWithStart(); 
+        	dijkstraWithStart(); 
         	break;
         case KeyEvent.VK_C: // clear
           model.clear();
