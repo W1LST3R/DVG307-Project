@@ -60,7 +60,7 @@ public class DemoApp extends JFrame
                 + "<tr><td><b>C</b></td><td>Reset</td></tr>"
                 + "<tr><td><b>ENTER</b></td><td>Choose points</td></tr>"
                 + "<tr><td><b>SPACE</b></td><td>Choose only start point</td></tr>"
-                + "<tr><td><b>T</b></td><td>Run Dijiksatra on all nodes</td></tr>"
+                + "<tr><td><b>T</b></td><td>Run Dijkstra on all nodes</td></tr>"
                 + "<tr><td><b>X</b></td><td>Clear all data</td></tr>"
                 + "<tr><td><b>W</b></td><td>Makes data for testing</td></tr>"
                 + "<tr><td><b>L</b></td><td>Loads original data</td></tr>"

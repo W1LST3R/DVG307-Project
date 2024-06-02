@@ -72,7 +72,7 @@ public class MapPanel extends JPanel
         }
       }  
     }
-  
+  //Runs Dijkstra's algorithm with a specified start vertex
   public void runTestOneRun() {
 		model.clear();
 		JPanel dialog = new JPanel(new GridLayout(1, 2));
@@ -82,17 +82,17 @@ public class MapPanel extends JPanel
 		dialog.add(new JLabel("Start"));
 		dialog.add(fromVertex);
 		
-		int dialogResult = JOptionPane.showConfirmDialog(null, dialog, "Choose route", JOptionPane.OK_CANCEL_OPTION,
+		int dialogResult = JOptionPane.showConfirmDialog(null, dialog, "Choose start vertex", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
 		if (dialogResult == 0)
 			if(!fromVertex.getText().isBlank()) {
-				// set fromVertex and toVertex
+				// set fromVertex
 				for(Vertex v : model.getVertices()) {
 					if(model.getStartVertex() == null && v.getName().equals(fromVertex.getText())) model.setStartVertex(v);
 				}
 				
 				if(model.getStartVertex() != null) {
-					int times = 5;
+					int times = 10;
 					double t1 = 0;
 					double t2 = 0;
 					for(int i = 0; i <times;i++ ) {
@@ -105,7 +105,7 @@ public class MapPanel extends JPanel
 					}
 					t1 = t1/times;
 					t2 = t2/times;
-					String timeForTest = "The time it took to do Dijikstra on node "+model.getStartVertex()+" was: "+(t2-t1)+" ms";
+					String timeForTest = "The time it took to do Dijkstra on node "+model.getStartVertex()+" was: "+(t2-t1)+" ms";
 					JOptionPane.showMessageDialog(null, new JLabel(timeForTest));
 				}else {
 					String errOut = "";
@@ -114,7 +114,7 @@ public class MapPanel extends JPanel
 				}
 			}
 	}
-  
+  //runs Dijkstra's algorithm on all vertexes
   public void runTest() {
 	  double t1 = System.currentTimeMillis();
 	  int totNodes= 0;
@@ -125,22 +125,24 @@ public class MapPanel extends JPanel
 		  model.clear();
 	  }
 	  double t2 = System.currentTimeMillis();
-	  String timeForTest = "The time it took to do Dijikstra on nodes "+totNodes+" was: "+(t2-t1)+" ms";
+	  String timeForTest = "The time it took to do Dijikstra on vertexes "+totNodes+" was: "+(t2-t1)+" ms";
 	  JOptionPane.showMessageDialog(null, new JLabel(timeForTest));
   }
+  
+  //loads data for Dijkstra
   public void loadFiles() {
   		model.readVertexFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\760_tatorter.csv");
 	  	model.readEdgeFile("H:\\git\\DVG307-Project\\ProjektDVG307\\src\\edges_760_tatorter.csv");
   }
-  
+  //loads data for Dijkstra
   public void loadFiles(String vertexPath, String edgePath) {
 		model.readVertexFile(vertexPath);
 	  	model.readEdgeFile(edgePath);
-}
+  }
 
+  //Gets the file path from the user, for the data to be use in Dijkstra
   public void getPaths()
   { 
-	  
 	  	model.clear();
 		JPanel dialog = new JPanel(new GridLayout(2, 2));
 		
@@ -158,7 +160,6 @@ public class MapPanel extends JPanel
 				JOptionPane.PLAIN_MESSAGE);
 		if (dialogResult == 0)
 			if(!vertexFileName.getText().isBlank() && !edgeFileName.getText().isBlank()) {
-				// set fromVertex and toVertex
 				vertexFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+vertexFileName.getText()+".csv";
 				edgeFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+edgeFileName.getText()+".csv";
 				if(!vertexFile.equals(edgeFile))
@@ -169,13 +170,12 @@ public class MapPanel extends JPanel
 				}
 			}
       // first create file object for file placed at location 
-      // specified by filepath 
+      // specified by file path 
   } 
   
-  
+  //makes dummy data to test time complexity of Dijkstra
   public void writeDataForTest() 
   { 
-	  
 	  	model.clear();
 		JPanel dialog = new JPanel(new GridLayout(3, 2));
 		
@@ -197,7 +197,6 @@ public class MapPanel extends JPanel
 				JOptionPane.PLAIN_MESSAGE);
 		if (dialogResult == 0)
 			if(!vertexFileName.getText().isBlank() && !edgeFileName.getText().isBlank()&& !number.getText().isBlank()) {
-				// set fromVertex and toVertex
 				vertexFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+vertexFileName.getText()+".csv";
 				edgeFile = "H:\\git\\DVG307-Project\\ProjektDVG307\\src\\"+edgeFileName.getText()+".csv";
 				nbrElements = Integer.parseInt(number.getText());
@@ -211,37 +210,34 @@ public class MapPanel extends JPanel
       // first create file object for file placed at location 
       // specified by filepath 
   } 
+  
+  //Simple script to do dummy data for vertexes and edges
   public void makeFiles(String vertexFile,String edgeFile, int nbrOfElements) {
 	  File fileVertex = new File(vertexFile); 
 	  File fileEdge = new File(edgeFile); 
       try { 
-          // create FileWriter object with file as parameter 
           FileWriter outputfilevertex = new FileWriter(fileVertex); 
           CsvWriterSettings settings = new CsvWriterSettings();
           settings.getFormat().setLineSeparator("\n");
           settings.trimValues(false);
-          // create CSVWriter object filewriter object as parameter 
           CsvWriter writerVertex = new CsvWriter(outputfilevertex,settings); 
     
-          // adding header to csv 
           String[] headerVertex = { "TATORT;BEF;lon;lat"};
           
           FileWriter outputfileEdges = new FileWriter(fileEdge); 
-          // create CSVWriter object filewriter object as parameter 
           CsvWriter writerEdges = new CsvWriter(outputfileEdges,settings); 
     
-          // adding header to csv 
           String[] headerEdges = { "From;To;Length in meter"}; 
           writerVertex.writeRow(headerVertex);
           writerEdges.writeRow(headerEdges); 
-          // add data to csv 
           for(int i = 0; i < nbrOfElements;i++) {
         	  int bef = 5000+(int)(50000*Math.random()+1);
-        	  //String str =;
         	  String dataVertex =  "a"+i+";"+bef+";"+"15,774151;61,099355";
         	  writerVertex.writeRow(dataVertex);
           }
           writerVertex.close();
+          
+          //all vertex will have a edge two too four edges
           for(int i = 0; i < nbrOfElements-1;i++) {
         	  int dist = 2000 +(int)(50000*Math.random()+1);
         	  String dataEdges = "a"+i+";a"+(i+1)+";"+dist;
@@ -253,20 +249,15 @@ public class MapPanel extends JPanel
         	  }
           }
          
-
-          // closing writer connection 
- 
           writerEdges.close();
       } 
       catch (IOException e) { 
-          // TODO Auto-generated catch block 
           e.printStackTrace(); 
       } 
-      //loadFiles(vertexFile, edgeFile);
   }
   
-  
-	public void showDialog() {
+  //Runs Dijkstra's algorithm with a specified start and end vertex, the result will show the shortest path between start and end vertex
+	public void dijksraWithStartEnd() {
 		model.clear();
 		JPanel dialog = new JPanel(new GridLayout(2, 2));
 		
@@ -298,8 +289,8 @@ public class MapPanel extends JPanel
 				}
 			}
 	}
-	
-	public void showDialogOnlyStart() {
+	//Runs Dijkstra's algorithm with a specified start, the result will show the shortest path from start vertex to every other vertex
+	public void dijksraWithStart() {
 		model.clear();
 		JPanel dialog = new JPanel(new GridLayout(1, 2));
 		
@@ -334,32 +325,32 @@ public class MapPanel extends JPanel
       {
       switch(e.getKeyCode())
         {
-        case KeyEvent.VK_ENTER:
-        	showDialog();
+        case KeyEvent.VK_ENTER: // run Dijkstra on a specific start node and end node
+        	dijksraWithStartEnd();
         	break;
-        case KeyEvent.VK_SPACE:
-        	showDialogOnlyStart();
+        case KeyEvent.VK_SPACE: // run Dijkstra on a specific start node
+        	dijksraWithStart(); 
         	break;
         case KeyEvent.VK_C: // clear
           model.clear();
           break;
-        case KeyEvent.VK_S: // clear
+        case KeyEvent.VK_S: // search
             getPaths();
             break;
-        case KeyEvent.VK_X: // clear
+        case KeyEvent.VK_X: // super clear
             model.superClear();
             break;
             
-        case KeyEvent.VK_W: // clear
+        case KeyEvent.VK_W: // write dummy data
             writeDataForTest();
             break;
-        case KeyEvent.VK_L: // clear
+        case KeyEvent.VK_L: // load standard data
         	loadFiles();
             break;
-        case KeyEvent.VK_T: // Load data for test
+        case KeyEvent.VK_T: // run Dijkstra on all nodes
             runTest();
             break;
-        case KeyEvent.VK_O: // Load data for test
+        case KeyEvent.VK_O: // run Dijkstra on a specific node
         	runTestOneRun();
             break;
         case KeyEvent.VK_LEFT: // rot left
